@@ -1,0 +1,20 @@
+[project]
+name = "netcut"
+version = "0.1.0"
+description = "cli tool to block or monitor network access for macOS apps"
+authors = [{ name = "Shailesh Saravanan", email = "shaileshsaravanan385@gmail.com" }]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.9"
+
+dependencies = [
+    "click",
+    "toml"
+]
+
+[project.scripts]
+netcut = "netcut.cli:cli"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
