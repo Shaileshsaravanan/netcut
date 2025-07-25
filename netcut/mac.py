@@ -11,6 +11,9 @@ PERSIST_DIR = "/usr/local/etc/netcut/persistent"
 SCHEDULE_FILE = "/tmp/netcut_schedule.txt"
 
 def ensure_dirs():
+    if os.path.exists(ANCHOR_DIR):
+        if not os.path.isdir(ANCHOR_DIR):
+            os.remove(ANCHOR_DIR)
     os.makedirs(ANCHOR_DIR, exist_ok=True)
     os.makedirs(PERSIST_DIR, exist_ok=True)
 
@@ -38,19 +41,49 @@ def write_pf_rules(app, ports, dry=False):
     if dry:
         return "\n".join(rules)
     path = os.path.join(ANCHOR_DIR, f"{app}.conf")
-    with open(path, "w") as f:
-        for line in rules:
-            f.write(line + "\n")
+    rule_text = "\n".join(rules) + "\n"
+    cmd = f"echo '{rule_text}' | sudo tee {path} > /dev/null"
+    subprocess.run(cmd, shell=True)
 
 def load_pf():
-    subprocess.run(["pfctl", "-f", MAIN_CONF], check=False)
-    subprocess.run(["pfctl", "-e"], check=False)
+    subprocess.run(["sudo", "pfctl", "-f", MAIN_CONF], check=False)
+    subprocess.run(["sudo", "pfctl", "-e"], check=False)
 
 def block_app(app, pid, dry=False):
     ports = get_ports_by_pid(pid)
     if not ports:
-        print("no ports found")
+        print("no ports found, using fallback rule")
+        try:
+            uid = psutil.Process(pid).uids().real
+        except Exception:
+            uid = 0
+        anchor_name = f"netcut_{app}"
+        path = f"/etc/pf.anchors/{anchor_name}"
+        rules = [f"block drop log out quick on en0 user {uid} to any"]
+        if dry:
+            return "\n".join(rules)
+        ensure_dirs()
+        rule_text = "\n".join(rules) + "\n"
+        cmd = f"echo '{rule_text}' | sudo tee {path} > /dev/null"
+        subprocess.run(cmd, shell=True)
+
+        # Ensure anchor config is present in pf.conf
+        with open(MAIN_CONF, "r") as f:
+            pfconf = f.read()
+        anchor_lines = [
+            f'anchor "{anchor_name}"',
+            f'load anchor "{anchor_name}" from "{path}"'
+        ]
+        needs_update = any(line not in pfconf for line in anchor_lines)
+        if needs_update:
+            anchor_text = "\n" + "\n".join(anchor_lines) + "\n"
+            cmd = f"echo '{anchor_text}' | sudo tee -a {MAIN_CONF} > /dev/null"
+            subprocess.run(cmd, shell=True)
+
+        load_pf()
+        print(f"blocked {app} with fallback rule")
         return
+
     rules = write_pf_rules(app, ports, dry=dry)
     if not dry:
         load_pf()
@@ -121,3 +154,4 @@ def check_schedule():
             f.write(l + "\n")
     for app in to_unblock:
         unblock_app(app)
+
