@@ -115,17 +115,8 @@ uv pip install netcut
 Or with pip:
 ```bash
 pip install netcut
-
-```bash
-pip install netcut
 ```
 
-Once installed, run it from anywhere:
-
-```bash
-netcut --help
-netcut stats
-```
 
 ✅ After installing, use it from anywhere:
 
