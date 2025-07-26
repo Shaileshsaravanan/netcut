@@ -1,0 +1,7 @@
+psutil
+rich
+scapy
+netifaces
+requests
+beautifulsoup4
+dnspython
