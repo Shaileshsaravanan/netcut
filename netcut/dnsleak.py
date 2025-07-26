@@ -1,6 +1,6 @@
 import dns.resolver
 
-def dns_leak_test():
+def test_dns_leak():
     resolver = dns.resolver.Resolver()
     print("Detected DNS Servers:")
     for server in resolver.nameservers:

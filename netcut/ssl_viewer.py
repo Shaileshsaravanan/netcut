@@ -2,7 +2,7 @@ import ssl
 import socket
 from datetime import datetime
 
-def ssl_cert_info(host):
+def view_cert(host):
     ctx = ssl.create_default_context()
     with ctx.wrap_socket(socket.socket(), server_hostname=host) as s:
         s.connect((host, 443))
