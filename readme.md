@@ -92,7 +92,7 @@ Domain registrar, expiration info (CLI: netcut whois <domain>)
 ## 🔧 Installation
 
 ```bash
-git clone https://github.com/yourname/netcut
+git clone https://github.com/shaileshsaravanan/netcut.git
 cd netcut
 pip install -r requirements.txt
 pip install -e .
