@@ -1,0 +1,9 @@
+requests
+scapy
+dnspython
+psutil
+beautifulsoup4
+speedtest-cli
+python-whois
+ping3
+rich

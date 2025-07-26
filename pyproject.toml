@@ -1,0 +1,26 @@
+[project]
+name = "netcut"
+version = "1.0.0"
+description = "Terminal-based network diagnostics and intelligence toolkit"
+authors = [{ name = "Shailesh Saravanan", email = "shaileshsaravanan385@gmail.com" }]
+readme = "readme.md"
+license = "MIT"
+requires-python = ">=3.8"
+dependencies = [
+    "requests",
+    "scapy",
+    "dnspython",
+    "psutil",
+    "beautifulsoup4",
+    "speedtest-cli",
+    "python-whois",
+    "ping3",
+    "rich"
+]
+
+[project.scripts]
+netcut = "netcut.main:main"
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

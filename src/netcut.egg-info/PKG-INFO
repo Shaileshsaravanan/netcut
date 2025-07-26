@@ -1,3 +1,24 @@
+Metadata-Version: 2.4
+Name: netcut
+Version: 1.0.0
+Summary: Terminal-based network diagnostics and intelligence toolkit
+Author: Shailesh Saravanan
+Author-email: Shailesh Saravanan <shaileshsaravanan385@gmail.com>
+License-Expression: MIT
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+Requires-Dist: requests
+Requires-Dist: scapy
+Requires-Dist: dnspython
+Requires-Dist: psutil
+Requires-Dist: beautifulsoup4
+Requires-Dist: speedtest-cli
+Requires-Dist: python-whois
+Requires-Dist: ping3
+Requires-Dist: rich
+Dynamic: author
+Dynamic: requires-python
+
 # 🧠 Netcut
 
 **Netcut** is a powerful all-in-one **terminal-based network toolkit** designed for diagnostics, analytics, reconnaissance, and debugging. From uptime analytics to wireless scanning, Netcut brings around 25 features in one unified CLI interface.
@@ -94,17 +115,11 @@ Domain registrar, expiration info (CLI: netcut whois <domain>)
 ```bash
 git clone https://github.com/shaileshsaravanan/netcut.git
 cd netcut
-
-# Option 1: Install via wheel (recommended)
-python3 -m build
-pip install dist/netcut-*.whl
-
-# Option 2: Install in editable mode (for development)
 pip install -r requirements.txt
 pip install -e .
 ```
 
-✅ After installing, use it from anywhere:
+✅ After install, use from anywhere:
 
 ```bash
 netcut stats

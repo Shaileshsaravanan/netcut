@@ -1,0 +1,2 @@
+[console_scripts]
+netcut = netcut.main:main

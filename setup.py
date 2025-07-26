@@ -3,9 +3,10 @@ from setuptools import setup, find_packages
 setup(
     name='netcut',
     version='1.0.0',
-    author='Shailesh',
+    author='Shailesh Saravanan',
     description='All-in-one terminal network toolkit for diagnostics, security, and web intelligence.',
-    packages=find_packages(),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     install_requires=[
         'requests',
         'scapy',
@@ -18,7 +19,7 @@ setup(
     ],
     entry_points={
         'console_scripts': [
-            'netcut=main:main',
+            'netcut=netcut.main:main',
         ],
     },
     classifiers=[
