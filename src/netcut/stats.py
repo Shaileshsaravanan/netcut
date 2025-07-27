@@ -1,27 +1,35 @@
 from rich.table import Table
 from rich.console import Console
-import datetime, json, os
+import psutil
 
 def display_stats():
-    with open("data/logs.json", "r") as f:
-        logs = json.load(f)
-
-    uptimes = [log["uptime"] for log in logs]
-    downtimes = [log["downtime"] for log in logs]
-    responses = [log["response_time"] for log in logs]
-
-    avg_uptime = round(sum(uptimes) / len(uptimes), 2)
-    longest_downtime = max(downtimes)
-    mean_response = round(sum(responses) / len(responses), 2)
-
     console = Console()
-    table = Table(title="Downtime Analytics")
+    table = Table(title="Current Network Interface Stats")
 
-    table.add_column("Metric", style="bold cyan")
-    table.add_column("Value", style="bold green")
+    table.add_column("Interface", style="bold cyan")
+    table.add_column("IP Address", style="bold green")
+    table.add_column("MAC Address", style="bold yellow")
+    table.add_column("RX (MB)", style="bold magenta")
+    table.add_column("TX (MB)", style="bold magenta")
+    table.add_column("Packets Sent", style="bold blue")
+    table.add_column("Packets Recv", style="bold blue")
 
-    table.add_row("Average Uptime (%)", str(avg_uptime))
-    table.add_row("Longest Downtime (s)", str(longest_downtime))
-    table.add_row("Mean Response Time (ms)", str(mean_response))
+    net_addrs = psutil.net_if_addrs()
+    net_io = psutil.net_io_counters(pernic=True)
+
+    for iface, addrs in net_addrs.items():
+        ip = "-"
+        mac = "-"
+        for addr in addrs:
+            if addr.family.name == "AF_INET":
+                ip = addr.address
+            elif addr.family.name == "AF_LINK":
+                mac = addr.address
+
+        stats = net_io.get(iface)
+        if stats:
+            rx = f"{stats.bytes_recv / (1024**2):.2f}"
+            tx = f"{stats.bytes_sent / (1024**2):.2f}"
+            table.add_row(iface, ip, mac, rx, tx, str(stats.packets_sent), str(stats.packets_recv))
 
     console.print(table)

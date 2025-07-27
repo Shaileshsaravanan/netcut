@@ -4,9 +4,14 @@ import time
 def monitor_api(url, headers):
     hdrs = {}
     if headers:
-        for h in headers:
-            k, v = h.split(":", 1)
-            hdrs[k.strip()] = v.strip()
+        try:
+            for h in headers.split(";"):
+                if ":" in h:
+                    k, v = h.split(":", 1)
+                    hdrs[k.strip()] = v.strip()
+        except Exception as e:
+            print(f"❌ Failed to parse headers: {e}")
+            return
 
     try:
         start = time.time()

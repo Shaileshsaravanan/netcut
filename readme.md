@@ -16,6 +16,7 @@
 - **Multi-Protocol Support** — ICMP fallback, TCP checks for HTTP/SSH, etc.
 - **Status Page Generator** — Export static HTML with service status  
   `netcut statuspage`
+- **Status Checker Loop** — Continuously check URL status and uptime in terminal  netcut statuspage <url>
 
 ### 📈 Monitoring & Analysis
 - **Bandwidth Usage Monitor** — Show live per-process bandwidth  
@@ -34,7 +35,7 @@
 ### 🌐 Internet & Web Tools
 - **SSL Certificate Viewer** — Show cert chain, issuer, expiry  
   `netcut ssl <host>`
-- **Subdomain Enumerator** — Find subdomains via wordlist  
+- **Subdomain Enumerator** — Find subdomains using certificate transparency logs  
   `netcut subdomains <domain>`
 - **CDN Detection** — Identify Cloudflare, Akamai, etc.  
   `netcut cdn <domain>`
@@ -44,9 +45,9 @@
   `netcut api <url>`
 
 ### 📡 Wireless & Local Network
-- **WiFi Signal Heatmap Export** — Export signal data to CSV/JSON  
+- **WiFi Signal Heatmap** — Show current nearby WiFi SSIDs (macOS: from known or preferred networks)  
   `netcut wifi`
-- **Bluetooth Device Scanner** — Detect nearby BT devices  
+- **Bluetooth Device Scanner** — Detect nearby or paired Bluetooth devices (macOS uses blueutil)  
   `netcut bt`
 - **DHCP Lease Viewer** — Parse local DHCP leases  
   `netcut dhcp`
@@ -54,7 +55,7 @@
   `netcut lan`
 
 ### ⚙️ Security & Debugging
-- **Proxy Checker** — Test HTTP/SOCKS proxies  
+- **Proxy Checker** — Test HTTP/SOCKS proxies and show IP or fallback text on failure  
   `netcut proxy <proxy_url>`
 - **DNS Leak Test** — Reveal actual DNS servers used  
   `netcut dnsleak`
@@ -143,12 +144,16 @@ Common Commands
 | `netcut scan <host>`               | TCP/UDP port scan                           |
 | `netcut firewall --list`           | Show current firewall rules                 |
 | `netcut ssl <host>`                | Show SSL certificate info                   |
-| `netcut wifi`                      | Export WiFi heatmap                         |
+| `netcut wifi`                      | Show nearby WiFi SSIDs (macOS: preferred networks) |
 | `netcut api <url>`                 | Test API with headers/auth                  |
 | `netcut traceroute <host>`         | Show ASCII hop map                          |
 | `netcut mitm-detect`              | Detect ARP/MAC spoofing (MITM)              |
 | `netcut reachability <file>`       | Check multiple URLs from file               |
 | `netcut whois <domain>`            | Perform WHOIS lookup                        |
+| `netcut bt`                       | Scan nearby/paired Bluetooth devices        |
+| `netcut proxy <proxy_url>`        | Check proxy functionality and show resolved IP |
+| `netcut subdomains <domain>`      | Find subdomains via cert transparency logs  |
+| `netcut statuspage <url>`         | Continuously check and log URL availability |
 
 See the full command list by running netcut --help.
 

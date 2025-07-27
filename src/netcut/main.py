@@ -1,31 +1,31 @@
 import argparse
-from stats import display_stats
-from geo import geo_lookup
-from check import check_host
-from statuspage import generate_status_page
-from bandwidth import show_bandwidth
-from packets import sniff_packets
-from portscan import scan_ports
-from arp import view_arp_table
-from firewall import list_rules, add_rule, remove_rule
-from interfaces import show_interfaces
-from ssl_viewer import view_cert
-from subdomains import enumerate_subdomains
-from cdn_detect import detect_cdn
-from tech_stack import fingerprint_tech
-from api_monitor import monitor_api
-from wifi_heatmap import export_wifi_heatmap
-from bluetooth import scan_bluetooth
-from dhcp import view_dhcp_leases
-from lan_discovery import discover_lan_services
-from proxy_check import check_proxy
-from dnsleak import test_dns_leak
-from traceroute import visualize_traceroute
-from mitm_detect import detect_mitm
-from speedtest_cli import run_speedtest
-from reachability import check_reachability
-from whois_lookup import perform_whois
-from tunnel_check import detect_tunnel_leak
+from netcut.stats import display_stats
+from netcut.geo import geo_lookup
+from netcut.check import check_host
+from netcut.statuspage import generate_status_page
+from netcut.bandwidth import show_bandwidth
+from netcut.packets import sniff_packets
+from netcut.portscan import scan_ports
+from netcut.arp import view_arp_table
+from netcut.firewall import list_rules
+from netcut.interfaces import show_interfaces
+from netcut.ssl_viewer import view_cert
+from netcut.subdomains import enumerate_subdomains
+from netcut.cdn_detect import detect_cdn
+from netcut.tech_stack import fingerprint_tech
+from netcut.api_monitor import monitor_api
+from netcut.wifi_heatmap import export_wifi_heatmap
+from netcut.bluetooth import scan_bluetooth
+from netcut.dhcp import view_dhcp_leases
+from netcut.lan_discovery import discover_lan_services
+from netcut.proxy_check import check_proxy
+from netcut.dnsleak import test_dns_leak
+from netcut.traceroute import visualize_traceroute
+from netcut.mitm_detect import detect_mitm
+from netcut.speedtest_cli import run_speedtest
+from netcut.reachability import check_reachability
+from netcut.whois_lookup import perform_whois
+from netcut.tunnel_check import detect_tunnel_leak
 
 def main():
     parser = argparse.ArgumentParser(description="Netcut Network Toolkit")
@@ -88,10 +88,7 @@ def main():
         case "sniffer": sniff_packets(args.port)
         case "scan": scan_ports(args.host, args.fast)
         case "arp": view_arp_table()
-        case "firewall":
-            if args.list: list_rules()
-            elif args.add: add_rule(args.add)
-            elif args.remove: remove_rule(args.remove)
+        case "firewall": list_rules()
         case "interfaces": show_interfaces()
         case "ssl": view_cert(args.host)
         case "subdomains": enumerate_subdomains(args.domain)
