@@ -104,20 +104,6 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
-## 📦 Install from PyPI
-
-You can also install Netcut directly from PyPI using `uv` or `pip`:
-
-```bash
-uv pip install netcut
-```
-
-Or with pip:
-```bash
-pip install netcut
-```
-
-
 ✅ After installing, use it from anywhere:
 
 ```bash

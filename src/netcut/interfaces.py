@@ -28,4 +28,3 @@ def show_interfaces():
     print(f"{'Interface':<15}{'RX Bytes':>12}{'TX Bytes':>12}{'RX Errors':>12}{'TX Errors':>12}")
     for iface, counters in net_io_counters.items():
         print(f"{iface:<15}{counters.bytes_recv:>12}{counters.bytes_sent:>12}{counters.errin:>12}{counters.errout:>12}")
-
