@@ -94,6 +94,7 @@
 ```bash
 git clone https://github.com/shaileshsaravanan/netcut.git
 cd netcut
+python3 -m pip install build
 
 # Option 1: Install via wheel (recommended)
 python3 -m build
